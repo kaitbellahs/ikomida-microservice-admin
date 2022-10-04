@@ -15,10 +15,10 @@ export default class Plans {
       const where =
         timestamp && timestamp != 0 && Number(Logics.Finances.toNumber(timestamp)) == timestamp
           ? {
-            createdAt: {
-              [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp))),
-            },
-          }
+              createdAt: {
+                [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp))),
+              },
+            }
           : null;
       const planModels = await DBModels.PlanModel.findAll({
         order: [['createdAt', 'DESC']],
@@ -45,11 +45,11 @@ export default class Plans {
           planModel?.support ?? [],
           planModel?.highlighted ?? false,
           (planModel?.price ?? 0) -
-          Logics.Finances.calcDiscount(
-            planModel?.price ?? 0,
-            planModel?.discount ?? 0,
-            planModel?.discountType ?? Types.Types.TDiscount.NO,
-          ),
+            Logics.Finances.calcDiscount(
+              planModel?.price ?? 0,
+              planModel?.discount ?? 0,
+              planModel?.discountType ?? Types.Types.TDiscount.NO,
+            ),
           planModel?.active,
           planModel?.createdAt,
           planModel?.order,
@@ -65,7 +65,10 @@ export default class Plans {
         ),
       );
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }
@@ -98,7 +101,10 @@ export default class Plans {
       });
       return new Utils.Return(true);
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_NEW_PLAN_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_NEW_PLAN_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }
@@ -139,7 +145,10 @@ export default class Plans {
       await plan.save();
       return new Utils.Return(true);
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_EDIT_PLAN_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_EDIT_PLAN_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }
@@ -155,7 +164,10 @@ export default class Plans {
       await plan?.destroy();
       return new Utils.Return(true);
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_DELETE_PLAN_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_DELETE_PLAN_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }
