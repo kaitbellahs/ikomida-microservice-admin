@@ -13,10 +13,10 @@ export default class Contracts {
       const where =
         timestamp && timestamp != 0 && Number(Logics.Finances.toNumber(timestamp)) == timestamp
           ? {
-            createdAt: {
-              [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp))),
-            },
-          }
+              createdAt: {
+                [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp))),
+              },
+            }
           : {};
       const contractModels: DBModels.ContractModel[] | null = await DBModels.ContractModel.findAll({
         order: [['createdAt', 'DESC']],
@@ -79,7 +79,10 @@ export default class Contracts {
         ),
       );
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }
@@ -109,17 +112,105 @@ export default class Contracts {
           },
         ],
       });
-      const contract: Types.Classes.CContract = Types.Classes.CContract.init(contractModel?.ikomidaID ?? '', contractModel?.contractName ?? '', contractModel?.name ?? '', contractModel?.lastName ?? '', contractModel?.contractIdentity ?? '', contractModel?.email ?? '', contractModel?.phone ?? '', contractModel?.areaCode ?? 0,
-        Types.Classes.CPlan.init(contractModel?.plan?.name ?? '', contractModel?.plan?.price ?? 0, contractModel?.plan?.discount ?? 0, contractModel?.plan?.discountType ?? Types.Types.TDiscount.NO, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, contractModel?.plan?.active, contractModel?.plan?.createdAt, contractModel?.plan?.order, contractModel?.plan?.id), undefined, contractModel?.status?.id, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, contractModel?.createdAt, contractModel?.id, contractModel?.createdAt.getTime(),
+      const contract: Types.Classes.CContract = Types.Classes.CContract.init(
+        contractModel?.ikomidaID ?? '',
+        contractModel?.contractName ?? '',
+        contractModel?.name ?? '',
+        contractModel?.lastName ?? '',
+        contractModel?.contractIdentity ?? '',
+        contractModel?.email ?? '',
+        contractModel?.phone ?? '',
+        contractModel?.areaCode ?? 0,
+        Types.Classes.CPlan.init(
+          contractModel?.plan?.name ?? '',
+          contractModel?.plan?.price ?? 0,
+          contractModel?.plan?.discount ?? 0,
+          contractModel?.plan?.discountType ?? Types.Types.TDiscount.NO,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          contractModel?.plan?.active,
+          contractModel?.plan?.createdAt,
+          contractModel?.plan?.order,
+          contractModel?.plan?.id,
+        ),
+        undefined,
+        contractModel?.status?.id,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        contractModel?.createdAt,
+        contractModel?.id,
+        contractModel?.createdAt.getTime(),
       );
       for (const appModel of contractModel?.apps ?? []) {
-        const app: Types.Classes.CApp = Types.Classes.CApp.init(appModel?.bundleId ?? '', appModel?.displayName ?? '', appModel?.platform ?? '', undefined, appModel?.version, appModel?.storeStatus, appModel?.storePublishStatus, undefined, undefined, undefined, appModel?.storeNote, appModel?.storeEvidences, appModel?.storeVersion, appModel?.storeBuildStatus,
-          Types.Classes.CUser.init(appModel?.user?.role?.id ?? '', appModel?.user?.name ?? '', appModel?.user?.lastName ?? '', '', appModel?.user?.email ?? '', appModel?.user?.phone ?? '', String(appModel?.user?.areaCode ?? ''), '', undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, appModel.user?.avatar, undefined, undefined, undefined, appModel.user?.id), appModel?.id);
+        const app: Types.Classes.CApp = Types.Classes.CApp.init(
+          appModel?.bundleId ?? '',
+          appModel?.displayName ?? '',
+          appModel?.platform ?? '',
+          undefined,
+          appModel?.version,
+          appModel?.storeStatus,
+          appModel?.storePublishStatus,
+          undefined,
+          undefined,
+          undefined,
+          appModel?.storeNote,
+          appModel?.storeEvidences,
+          appModel?.storeVersion,
+          appModel?.storeBuildStatus,
+          Types.Classes.CUser.init(
+            appModel?.user?.role?.id ?? '',
+            appModel?.user?.name ?? '',
+            appModel?.user?.lastName ?? '',
+            '',
+            appModel?.user?.email ?? '',
+            appModel?.user?.phone ?? '',
+            String(appModel?.user?.areaCode ?? ''),
+            '',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            appModel.user?.avatar,
+            undefined,
+            undefined,
+            undefined,
+            appModel.user?.id,
+          ),
+          appModel?.id,
+        );
         contract?.apps?.push(app);
       }
       return new Utils.Return(true, contract);
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }
@@ -157,7 +248,10 @@ export default class Contracts {
         name: userModel?.name,
       });
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }
@@ -195,7 +289,10 @@ export default class Contracts {
       }
       return new Utils.Return(true, {});
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }

@@ -13,10 +13,10 @@ export default class Settings {
       const where =
         timestamp && timestamp != 0 && Number(Logics.Finances.toNumber(timestamp)) == timestamp
           ? {
-            createdAt: {
-              [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp))),
-            },
-          }
+              createdAt: {
+                [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp))),
+              },
+            }
           : {};
       const settingModels = await DBModels.SettingModel.findAll({
         where,
@@ -39,7 +39,10 @@ export default class Settings {
         settings?.sort((item1, item2) => (item2.timestamp ?? 0) - (item1.timestamp ?? 0)),
       );
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_SETTINGS_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_SETTINGS_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }
@@ -59,7 +62,10 @@ export default class Settings {
       });
       return new Utils.Return(true);
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_NEW_SETTING_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_NEW_SETTING_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }
@@ -75,7 +81,10 @@ export default class Settings {
       await setting?.destroy();
       return new Utils.Return(true);
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_DELETE_SETTING_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_DELETE_SETTING_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }
@@ -96,7 +105,10 @@ export default class Settings {
       }
       return new Utils.Return(true);
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_EDIT_SETTING_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_EDIT_SETTING_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }
@@ -117,7 +129,10 @@ export default class Settings {
       // await setting?.save()
       return new Utils.Return(true);
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_ACTIVE_SETTING_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_ACTIVE_SETTING_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }

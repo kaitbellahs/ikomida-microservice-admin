@@ -15,10 +15,10 @@ export default class Apps {
       const where: WhereOptions =
         timestamp && timestamp != 0 && Number(Logics.Finances.toNumber(timestamp)) == timestamp
           ? {
-            createdAt: {
-              [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp))),
-            },
-          }
+              createdAt: {
+                [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp))),
+              },
+            }
           : {};
       const userModel: DBModels.UserModel | null = await DBModels.UserModel.findOne({
         where: {
@@ -35,7 +35,25 @@ export default class Apps {
         },
       });
       const apps = userModel?.apps?.map((appModel: DBModels.AppModel) => {
-        return Types.Classes.CApp.init(appModel?.bundleId ?? '', appModel?.displayName ?? '', appModel?.platform ?? '', undefined, appModel?.version, appModel?.storeStatus, appModel?.storePublishStatus, appModel?.active, appModel?.createdAt, undefined, undefined, undefined, undefined, undefined, undefined, appModel?.id, appModel?.createdAt.getTime());
+        return Types.Classes.CApp.init(
+          appModel?.bundleId ?? '',
+          appModel?.displayName ?? '',
+          appModel?.platform ?? '',
+          undefined,
+          appModel?.version,
+          appModel?.storeStatus,
+          appModel?.storePublishStatus,
+          appModel?.active,
+          appModel?.createdAt,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          appModel?.id,
+          appModel?.createdAt.getTime(),
+        );
       });
       return new Utils.Return(
         true,
@@ -90,7 +108,10 @@ export default class Apps {
       });
       return new Utils.Return(true, app);
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }
@@ -126,7 +147,10 @@ export default class Apps {
       await appModel.save();
       return new Utils.Return(true);
     } catch (exception: any) {
-      const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION, exception?.message);
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION,
+        exception?.message,
+      );
       return error.logAndReturn(this.logger);
     }
   }
