@@ -1,11 +1,11 @@
-import { BackendTypes, DBModels, Domain, Logics, Types, Utils } from '@ikomida/shared-backend';
+import { BackendTypes, DBModels, Domain, Logics, Types, Utils } from '@ikomida/shared-backend'
 
 export default class Contracts {
-  logger;
-  limit = 10;
+  logger
+  limit = 10
 
   constructor(logger: Utils.Logger) {
-    this.logger = logger;
+    this.logger = logger
   }
 
   async getContracts(timestamp = 0) {
@@ -14,10 +14,10 @@ export default class Contracts {
         timestamp && timestamp != 0 && Number(Logics.Finances.toNumber(timestamp)) == timestamp
           ? {
               createdAt: {
-                [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp))),
-              },
+                [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp)))
+              }
             }
-          : {};
+          : {}
       const contractModels: DBModels.ContractModel[] | null = await DBModels.ContractModel.findAll({
         order: [['createdAt', 'DESC']],
         limit: this.limit,
@@ -25,7 +25,7 @@ export default class Contracts {
         include: [
           {
             model: DBModels.PlanModel,
-            required: true,
+            required: true
           },
           {
             model: DBModels.AppModel,
@@ -34,12 +34,12 @@ export default class Contracts {
               {
                 model: DBModels.UserModel,
                 as: 'managedBy',
-                required: false,
-              },
-            ],
-          },
-        ],
-      });
+                required: false
+              }
+            ]
+          }
+        ]
+      })
       const contracts: Types.Classes.CContract[] | null = contractModels.map(
         (contractModel: DBModels.ContractModel) => {
           const contract: Types.Classes.CContract = Types.Classes.CContract.fromObject({
@@ -49,12 +49,12 @@ export default class Contracts {
             status: contractModel?.status,
             plan: {
               id: contractModel?.plan?.id,
-              name: contractModel?.plan?.name ?? '-',
+              name: contractModel?.plan?.name ?? '-'
             },
             apps: [],
             createdAt: contractModel?.createdAt,
-            timestamp: contractModel?.createdAt.getTime(),
-          });
+            timestamp: contractModel?.createdAt.getTime()
+          })
           for (const appModel of contractModel?.apps ?? []) {
             const app: Types.Classes.CApp = Types.Classes.CApp.fromObject({
               id: appModel?.id,
@@ -63,27 +63,27 @@ export default class Contracts {
               storePublishStatus: appModel?.storePublishStatus,
               managedBy: {
                 id: appModel?.user?.id ?? '-',
-                name: appModel?.user?.name ?? '-',
-              },
-            });
-            contract?.apps?.push(app);
+                name: appModel?.user?.name ?? '-'
+              }
+            })
+            contract?.apps?.push(app)
           }
-          return contract;
-        },
-      );
+          return contract
+        }
+      )
       return new Utils.Return(
         true,
         contracts?.sort(
           (item1: Types.Classes.CContract, item2: Types.Classes.CContract) =>
-            (item2?.timestamp ?? 0 ?? 0) - (item1?.timestamp ?? 0 ?? 0),
-        ),
-      );
+            (item2?.timestamp ?? 0 ?? 0) - (item1?.timestamp ?? 0 ?? 0)
+        )
+      )
     } catch (exception: any) {
       const error = new Utils.iKomidaError(
         Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION,
-        exception?.message,
-      );
-      return error.logAndReturn(this.logger);
+        exception?.message
+      )
+      return error.logAndReturn(this.logger)
     }
   }
 
@@ -92,12 +92,12 @@ export default class Contracts {
       //TODO: --validate Id
       const contractModel = await DBModels.ContractModel.findOne({
         where: {
-          id,
+          id
         },
         include: [
           {
             model: DBModels.PlanModel,
-            required: true,
+            required: true
           },
           {
             model: DBModels.AppModel,
@@ -106,12 +106,12 @@ export default class Contracts {
               {
                 model: DBModels.UserModel,
                 as: 'managedBy',
-                required: false,
-              },
-            ],
-          },
-        ],
-      });
+                required: false
+              }
+            ]
+          }
+        ]
+      })
       const contract: Types.Classes.CContract = Types.Classes.CContract.init(
         contractModel?.ikomidaID ?? '',
         contractModel?.contractName ?? '',
@@ -140,7 +140,7 @@ export default class Contracts {
           contractModel?.plan?.active,
           contractModel?.plan?.createdAt,
           contractModel?.plan?.order,
-          contractModel?.plan?.id,
+          contractModel?.plan?.id
         ),
         undefined,
         contractModel?.status?.id,
@@ -155,8 +155,8 @@ export default class Contracts {
         undefined,
         contractModel?.createdAt,
         contractModel?.id,
-        contractModel?.createdAt.getTime(),
-      );
+        contractModel?.createdAt.getTime()
+      )
       for (const appModel of contractModel?.apps ?? []) {
         const app: Types.Classes.CApp = Types.Classes.CApp.init(
           appModel?.bundleId ?? '',
@@ -199,76 +199,76 @@ export default class Contracts {
             undefined,
             undefined,
             undefined,
-            appModel.user?.id,
+            appModel.user?.id
           ),
-          appModel?.id,
-        );
-        contract?.apps?.push(app);
+          appModel?.id
+        )
+        contract?.apps?.push(app)
       }
-      return new Utils.Return(true, contract);
+      return new Utils.Return(true, contract)
     } catch (exception: any) {
       const error = new Utils.iKomidaError(
         Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION,
-        exception?.message,
-      );
-      return error.logAndReturn(this.logger);
+        exception?.message
+      )
+      return error.logAndReturn(this.logger)
     }
   }
 
   async associateContract(identity: Types.Classes.CUser, id: string, appId: string) {
     try {
       //TODO: --validate Ids
-      const role = BackendTypes.Roles.valueOf(identity.role);
+      const role = BackendTypes.Roles.valueOf(identity.role)
       const contractModel = await DBModels.ContractModel.findOne({
         where: {
-          id,
+          id
         },
         include: {
           model: DBModels.AppModel,
           required: true,
           where: {
-            id: appId,
-          },
-        },
-      });
+            id: appId
+          }
+        }
+      })
       const userModel = await DBModels.UserModel.findOne({
         where: {
           id: identity?.id,
-          role,
-        },
-      });
-      const appModel = contractModel?.apps?.[0];
+          role
+        }
+      })
+      const appModel = contractModel?.apps?.[0]
       if (appModel && userModel) {
-        await userModel.$add('app', appModel);
-        appModel.storeStatus = 'PENDING';
-        await appModel?.save();
+        await userModel.$add('app', appModel)
+        appModel.storeStatus = 'PENDING'
+        await appModel?.save()
       }
       return new Utils.Return(true, {
         id: userModel?.id,
-        name: userModel?.name,
-      });
+        name: userModel?.name
+      })
     } catch (exception: any) {
       const error = new Utils.iKomidaError(
         Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION,
-        exception?.message,
-      );
-      return error.logAndReturn(this.logger);
+        exception?.message
+      )
+      return error.logAndReturn(this.logger)
     }
   }
 
   async unAssociateContract(identity: Types.Classes.CUser, id: string, appId: string) {
     try {
       //TODO: --validate Ids
-      const role = BackendTypes.Roles.valueOf(identity.role);
+      const role = BackendTypes.Roles.valueOf(identity.role)
       const contractModel = await DBModels.ContractModel.findOne({
         where: {
-          id,
+          id
         },
         include: {
           model: DBModels.AppModel,
           required: true,
           where: {
-            id: appId,
+            id: appId
           },
           include: [
             {
@@ -276,24 +276,24 @@ export default class Contracts {
               required: true,
               where: {
                 id: identity?.id,
-                role,
-              },
-            },
-          ],
-        },
-      });
-      const appModel = contractModel?.apps?.[0];
-      const userModel = contractModel?.apps?.[0]?.user;
+                role
+              }
+            }
+          ]
+        }
+      })
+      const appModel = contractModel?.apps?.[0]
+      const userModel = contractModel?.apps?.[0]?.user
       if (appModel && userModel) {
-        await userModel?.$remove('app', appModel);
+        await userModel?.$remove('app', appModel)
       }
-      return new Utils.Return(true, {});
+      return new Utils.Return(true, {})
     } catch (exception: any) {
       const error = new Utils.iKomidaError(
         Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_GET_PLANS_EXCEPTION,
-        exception?.message,
-      );
-      return error.logAndReturn(this.logger);
+        exception?.message
+      )
+      return error.logAndReturn(this.logger)
     }
   }
 }
