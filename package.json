@@ -1,6 +1,6 @@
 {
   "name": "ikomida-admin-service",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ikomida admin service",
   "private": true,
   "module": "build/service.js",
