@@ -13,10 +13,10 @@ export default class Contracts {
       const where =
         timestamp && timestamp != 0 && Number(Logics.Finances.toNumber(timestamp)) == timestamp
           ? {
-              createdAt: {
-                [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp)))
-              }
+            createdAt: {
+              [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp)))
             }
+          }
           : {}
       const contractModels: DBModels.ContractModel[] | null = await DBModels.ContractModel.findAll({
         order: [['createdAt', 'DESC']],
@@ -126,6 +126,7 @@ export default class Contracts {
           contractModel?.plan?.price ?? 0,
           contractModel?.plan?.discount ?? 0,
           contractModel?.plan?.discountType ?? Types.Types.TDiscount.NO,
+          undefined,
           undefined,
           undefined,
           undefined,
