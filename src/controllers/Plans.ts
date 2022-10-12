@@ -15,10 +15,10 @@ export default class Plans {
       const where =
         timestamp && timestamp != 0 && Number(Logics.Finances.toNumber(timestamp)) == timestamp
           ? {
-            createdAt: {
-              [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp)))
+              createdAt: {
+                [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp)))
+              }
             }
-          }
           : null
       const planModels = await DBModels.PlanModel.findAll({
         order: [['createdAt', 'DESC']],
@@ -46,11 +46,11 @@ export default class Plans {
           planModel?.support ?? [],
           planModel?.highlighted ?? false,
           (planModel?.price ?? 0) -
-          Logics.Finances.calcDiscount(
-            planModel?.price ?? 0,
-            planModel?.discount ?? 0,
-            planModel?.discountType ?? Types.Types.TDiscount.NO
-          ),
+            Logics.Finances.calcDiscount(
+              planModel?.price ?? 0,
+              planModel?.discount ?? 0,
+              planModel?.discountType ?? Types.Types.TDiscount.NO
+            ),
           planModel?.active,
           planModel?.createdAt,
           planModel?.order,
