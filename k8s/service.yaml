@@ -1,13 +1,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: admin-service
+  name: $NAME-service
   labels:
-    app: admin-service
+    app: $NAME-service
   namespace: ikomida
 spec:
   selector:
-     app: admin
+    app: $NAME
   ports:
-  - protocol: TCP
-    port: 1988
+    - protocol: TCP
+      port: 1988
