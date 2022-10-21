@@ -1,5 +1,0 @@
-apps:
-    - name: ikomida-admin-service
-      script: ./src/service.mjs
-      exec_mode: cluster
-      instances: max
