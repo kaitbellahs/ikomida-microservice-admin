@@ -53,6 +53,17 @@ app.put('/admin/plan', async (req, res) => {
   res.status(payload?.success ? 201 : 200).sendResponse(payload)
 })
 
+app.patch('/admin/plan', async (req, res) => {
+  const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
+  const role = BackendTypes.Roles.valueOf(identity.role)
+  if (!role || ![BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+    const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
+    return res.status(403).sendResponse(error.logAndReturn(logger))
+  }
+  const payload = await plans.activatePlan(Types.Classes.CPlan.fromObject(req.body))
+  res.status(payload?.success ? 201 : 200).sendResponse(payload)
+})
+
 app.delete('/admin/plan/:id', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
   const role = BackendTypes.Roles.valueOf(identity.role)
