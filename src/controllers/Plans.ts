@@ -77,7 +77,7 @@ export default class Plans {
   async newPlan(input: any) {
     try {
       const object: Types.Classes.CPlan = Types.Classes.CPlan.fromObject(input)
-      if (!object.validate() || !this.validateObject(object)) {
+      if (!this.validateObject(object)) {
         const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_NEW_PLAN_MISSING_DATA)
         return error.logAndReturn(this.logger)
       }
@@ -173,22 +173,30 @@ export default class Plans {
     }
   }
 
+  async activatePlan(input: any) {
+    try {
+      const object: Types.Classes.CPlan = Types.Classes.CPlan.fromObject(input)
+      const planModel = await DBModels.PlanModel.findOne({
+        where: {
+          id: object?.id
+        }
+      })
+      if (planModel) {
+        planModel.active = !planModel?.active
+        planModel?.save()
+        return new Utils.Return(true)
+      }
+      return new Utils.Return(false)
+    } catch (exception: any) {
+      const error = new Utils.iKomidaError(
+        Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_ACTIVE_SETTING_EXCEPTION,
+        exception?.message
+      )
+      return error.logAndReturn(this.logger)
+    }
+  }
+
   validateObject(object: Types.Classes.CPlan) {
-    return objHasProp(
-      [
-        'name',
-        'price',
-        'discount',
-        'discountType',
-        'order',
-        'staff',
-        'products',
-        'orders',
-        'billing',
-        'details',
-        'support'
-      ],
-      object
-    )
+    return objHasProp(['name', 'price', 'discount', 'discountType'], object)
   }
 }
