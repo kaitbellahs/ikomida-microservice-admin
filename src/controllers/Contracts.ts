@@ -33,7 +33,6 @@ export default class Contracts {
             include: [
               {
                 model: DBModels.UserModel,
-                as: 'managedBy',
                 required: false
               }
             ]
@@ -105,7 +104,6 @@ export default class Contracts {
             include: [
               {
                 model: DBModels.UserModel,
-                as: 'managedBy',
                 required: false
               }
             ]
@@ -150,7 +148,7 @@ export default class Contracts {
         undefined,
         undefined,
         undefined,
-        undefined,
+        [],
         undefined,
         undefined,
         undefined,
