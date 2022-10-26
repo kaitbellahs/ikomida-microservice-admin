@@ -15,10 +15,10 @@ export default class Plans {
       const where =
         timestamp && timestamp != 0 && Number(Logics.Finances.toNumber(timestamp)) == timestamp
           ? {
-              createdAt: {
-                [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp)))
-              }
+            createdAt: {
+              [Domain.SqlDB.Op.lt]: new Date(Number(Logics.Finances.toNumber(timestamp)))
             }
+          }
           : null
       const planModels = await DBModels.PlanModel.findAll({
         order: [['createdAt', 'DESC']],
@@ -46,14 +46,15 @@ export default class Plans {
           planModel?.support ?? [],
           planModel?.highlighted ?? false,
           (planModel?.price ?? 0) -
-            Logics.Finances.calcDiscount(
-              planModel?.price ?? 0,
-              planModel?.discount ?? 0,
-              planModel?.discountType ?? Types.Types.TDiscount.NO
-            ),
+          Logics.Finances.calcDiscount(
+            planModel?.price ?? 0,
+            planModel?.discount ?? 0,
+            planModel?.discountType ?? Types.Types.TDiscount.NO
+          ),
           planModel?.active,
           planModel?.createdAt,
           planModel?.order,
+          planModel.dueDateAfterXDays,
           planModel?.id,
           planModel?.createdAt.getTime()
         )
@@ -98,7 +99,8 @@ export default class Plans {
         coupons: object.coupons,
         billing: Logics.Finances.toFinanceNumber(object.billing ?? 0),
         details: object.details,
-        support: object.support
+        support: object.support,
+        dueDateAfterXDays: object.dueDateAfterXDays ?? 0
       })
       return new Utils.Return(true)
     } catch (exception: any) {
@@ -143,6 +145,7 @@ export default class Plans {
       plan.billing = Logics.Finances.toFinanceNumber(object.billing ?? 0) ?? 0
       plan.support = object.support
       plan.details = object.details
+      plan.dueDateAfterXDays = object.dueDateAfterXDays
       await plan.save()
       return new Utils.Return(true)
     } catch (exception: any) {
