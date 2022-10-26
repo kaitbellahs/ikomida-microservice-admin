@@ -54,6 +54,7 @@ export default class Plans {
           planModel?.active,
           planModel?.createdAt,
           planModel?.order,
+          planModel.dueDateAfterXDays,
           planModel?.id,
           planModel?.createdAt.getTime()
         )
@@ -98,7 +99,8 @@ export default class Plans {
         coupons: object.coupons,
         billing: Logics.Finances.toFinanceNumber(object.billing ?? 0),
         details: object.details,
-        support: object.support
+        support: object.support,
+        dueDateAfterXDays: object.dueDateAfterXDays ?? 0
       })
       return new Utils.Return(true)
     } catch (exception: any) {
@@ -143,6 +145,7 @@ export default class Plans {
       plan.billing = Logics.Finances.toFinanceNumber(object.billing ?? 0) ?? 0
       plan.support = object.support
       plan.details = object.details
+      plan.dueDateAfterXDays = object.dueDateAfterXDays
       await plan.save()
       return new Utils.Return(true)
     } catch (exception: any) {
