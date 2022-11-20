@@ -11,7 +11,7 @@ export default class Apps {
 
   async getApps(identity: Types.Classes.CUser, timestamp = 0) {
     try {
-      const role = BackendTypes.Roles.valueOf(identity.role)
+      const role = identity.role
       const where: WhereOptions =
         timestamp && timestamp != 0 && Number(Logics.Finances.toNumber(timestamp)) == timestamp
           ? {
@@ -70,7 +70,7 @@ export default class Apps {
   async getApp(identity: Types.Classes.CUser, id: string) {
     try {
       //TODO: --validate Id
-      const role = BackendTypes.Roles.valueOf(identity.role)
+      const role = identity.role
       const userModel = await DBModels.UserModel.findOne({
         where: {
           id: identity?.id,
@@ -120,7 +120,7 @@ export default class Apps {
     try {
       //TODO: --validate Id
       const object: Types.Classes.CApp = Types.Classes.CApp.fromObject(input)
-      const role = BackendTypes.Roles.valueOf(identity.role)
+      const role = identity.role
       const userModel = await DBModels.UserModel.findOne({
         where: {
           id: identity?.id,
