@@ -220,7 +220,7 @@ export default class Contracts {
   async associateContract(identity: Types.Classes.CUser, id: string, appId: string) {
     try {
       //TODO: --validate Ids
-      const role = BackendTypes.Roles.valueOf(identity.role)
+      const role = identity.role
       const contractModel = await DBModels.ContractModel.findOne({
         where: {
           id
@@ -261,7 +261,7 @@ export default class Contracts {
   async unAssociateContract(identity: Types.Classes.CUser, id: string, appId: string) {
     try {
       //TODO: --validate Ids
-      const role = BackendTypes.Roles.valueOf(identity.role)
+      const role = identity.role
       const contractModel = await DBModels.ContractModel.findOne({
         where: {
           id
