@@ -1,4 +1,4 @@
-import { BackendTypes, DBModels, Domain, Utils } from '@ikomida/shared-backend'
+import { Types, DBModels, Utils } from '@ikomida/shared-backend'
 
 export default class Statistics {
   logger
@@ -31,7 +31,7 @@ export default class Statistics {
   }
   async countResellers() {
     try {
-      return new Utils.Return(true, await DBModels.UserModel.count({ where: { role: BackendTypes.Roles.RESELLER } }))
+      return new Utils.Return(true, await DBModels.UserModel.count({ where: { role: Types.Types.TRoles.RESELLER } }))
     } catch (exception: any) {
       const error = new Utils.iKomidaError(
         Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_COUNT_RESELLERS_EXCEPTION,
@@ -42,7 +42,7 @@ export default class Statistics {
   }
   async countUsers() {
     try {
-      return new Utils.Return(true, await DBModels.UserModel.count({ where: { role: BackendTypes.Roles.CLIENT } }))
+      return new Utils.Return(true, await DBModels.UserModel.count({ where: { role: Types.Types.TRoles.CLIENT } }))
     } catch (exception: any) {
       const error = new Utils.iKomidaError(
         Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_COUNT_USERS_EXCEPTION,
