@@ -33,8 +33,8 @@ const apps = new Apps(logger)
 //MARK: --Plans
 app.post('/admin/plan', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -44,8 +44,8 @@ app.post('/admin/plan', async (req, res) => {
 
 app.put('/admin/plan', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -55,8 +55,8 @@ app.put('/admin/plan', async (req, res) => {
 
 app.patch('/admin/plan', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -66,8 +66,8 @@ app.patch('/admin/plan', async (req, res) => {
 
 app.delete('/admin/plan/:id', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -77,8 +77,8 @@ app.delete('/admin/plan/:id', async (req, res) => {
 
 app.get('/admin/plans/:timestamp', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -89,8 +89,8 @@ app.get('/admin/plans/:timestamp', async (req, res) => {
 //MARK: --contracts
 app.get('/admin/contracts/:timestamp', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || !BackendTypes.Roles.isInternal(role)) {
+  const role = identity.role
+  if (!role || !Types.Types.TRoles.isInternal(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -100,8 +100,8 @@ app.get('/admin/contracts/:timestamp', async (req, res) => {
 
 app.get('/admin/contract/:id', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || !BackendTypes.Roles.isInternal(role)) {
+  const role = identity.role
+  if (!role || !Types.Types.TRoles.isInternal(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -111,8 +111,8 @@ app.get('/admin/contract/:id', async (req, res) => {
 
 app.patch('/admin/contract/:id/app/:appId/associate', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || !BackendTypes.Roles.isInternal(role)) {
+  const role = identity.role
+  if (!role || !Types.Types.TRoles.isInternal(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -122,8 +122,8 @@ app.patch('/admin/contract/:id/app/:appId/associate', async (req, res) => {
 
 app.delete('/admin/contract/:id/app/:appId/associate', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || !BackendTypes.Roles.isInternal(role)) {
+  const role = identity.role
+  if (!role || !Types.Types.TRoles.isInternal(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -134,8 +134,8 @@ app.delete('/admin/contract/:id/app/:appId/associate', async (req, res) => {
 //MARK: --Apps
 app.get('/admin/apps/:timestamp', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || !BackendTypes.Roles.isInternal(role)) {
+  const role = identity.role
+  if (!role || !Types.Types.TRoles.isInternal(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -145,8 +145,8 @@ app.get('/admin/apps/:timestamp', async (req, res) => {
 
 app.get('/admin/app/:id', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || !BackendTypes.Roles.isInternal(role)) {
+  const role = identity.role
+  if (!role || !Types.Types.TRoles.isInternal(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -156,8 +156,8 @@ app.get('/admin/app/:id', async (req, res) => {
 
 app.patch('/admin/app/:id', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || !BackendTypes.Roles.isInternal(role)) {
+  const role = identity.role
+  if (!role || !Types.Types.TRoles.isInternal(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -168,8 +168,8 @@ app.patch('/admin/app/:id', async (req, res) => {
 //MARK: --Statistics
 app.get('/admin/productsCount', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -180,8 +180,8 @@ app.get('/admin/productsCount', async (req, res) => {
 })
 app.get('/admin/ordersCount', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -190,8 +190,8 @@ app.get('/admin/ordersCount', async (req, res) => {
 })
 app.get('/admin/resellersCount', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -200,8 +200,8 @@ app.get('/admin/resellersCount', async (req, res) => {
 })
 app.get('/admin/restaurantsCount', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -210,8 +210,8 @@ app.get('/admin/restaurantsCount', async (req, res) => {
 })
 app.get('/admin/usersCount', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -220,8 +220,8 @@ app.get('/admin/usersCount', async (req, res) => {
 })
 app.get('/admin/couponsCount', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -232,8 +232,8 @@ app.get('/admin/couponsCount', async (req, res) => {
 //MAKR: -- Setting
 app.get('/admin/settings/:timestamp', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -242,8 +242,8 @@ app.get('/admin/settings/:timestamp', async (req, res) => {
 })
 app.post('/admin/setting', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -252,8 +252,8 @@ app.post('/admin/setting', async (req, res) => {
 })
 app.put('/admin/activateSetting', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -262,8 +262,8 @@ app.put('/admin/activateSetting', async (req, res) => {
 })
 app.put('/admin/setting', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -272,8 +272,8 @@ app.put('/admin/setting', async (req, res) => {
 })
 app.delete('/admin/setting/:id', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -283,8 +283,8 @@ app.delete('/admin/setting/:id', async (req, res) => {
 //MARK: -- Terms
 app.get('/admin/terms/:timestamp', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -293,8 +293,8 @@ app.get('/admin/terms/:timestamp', async (req, res) => {
 })
 app.post('/admin/term', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -303,8 +303,8 @@ app.post('/admin/term', async (req, res) => {
 })
 app.put('/admin/activateTerm', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -313,8 +313,8 @@ app.put('/admin/activateTerm', async (req, res) => {
 })
 app.put('/admin/term', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
@@ -323,8 +323,8 @@ app.put('/admin/term', async (req, res) => {
 })
 app.delete('/admin/term/:id', async (req, res) => {
   const identity: Types.Classes.CUser = Types.Classes.CUser.fromObject(req.headers?.identity)
-  const role = BackendTypes.Roles.valueOf(identity.role)
-  if (!role || ![BackendTypes.Roles.MARKETING, BackendTypes.Roles.MANAGER, BackendTypes.Roles.ADMIN].includes(role)) {
+  const role = identity.role
+  if (!role || ![Types.Types.TRoles.MARKETING, Types.Types.TRoles.MANAGER, Types.Types.TRoles.ADMIN].includes(role)) {
     const error = new Utils.iKomidaError(Utils.iKomidaError.IKOMIDA_ADMIN_SERVICE_UNAUTHORIZED)
     return res.status(403).sendResponse(error.logAndReturn(logger))
   }
