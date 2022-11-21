@@ -232,6 +232,18 @@
     uuid "^9.0.0"
     xml-js "^1.6.11"
 
+"@ikomida/shared-logics@^1.2.1":
+  version "1.2.1"
+  resolved "https://us-central1-npm.pkg.dev/ikomida-dev/node/@ikomida/shared-logics/-/@ikomida/shared-logics-1.2.1.tgz#57c5a2b7a1155d99c7adff83d6a188528d35f921"
+  integrity sha512-z2+pEGazLh6UVszB3vWjJR4DtGVDdG3vJbwASpstNmP2N6YTYcEp4KFfAHPgoNvcFwXRrpWCBi8sgTLYF02dZw==
+  dependencies:
+    luxon "^3.1.0"
+
+"@ikomida/shared-types@^1.5.12":
+  version "1.5.12"
+  resolved "https://us-central1-npm.pkg.dev/ikomida-dev/node/@ikomida/shared-types/-/@ikomida/shared-types-1.5.12.tgz#7ec488fa369b18f1ef4532419c7b4bb6d5625d7b"
+  integrity sha512-62S2fC0UEQ0jcnZVXNV6SR/evnuKYaJ9ukECUm3ApfwKDxuuVnIpSIWvZN9tiGFUj2XoCi9sfpxeXGCa4/jWeQ==
+
 "@jridgewell/gen-mapping@^0.3.0":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.3.2.tgz#c1aedc61e853f2bb9f5dfe6d4442d3b565b253b9"
